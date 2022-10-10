@@ -1,26 +1,29 @@
+
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <MainWrap></MainWrap>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import MainWrap from '@/components/layout/MainWrap.vue';
+import  '@/assets/css/reset.css'; //전역 CSS 설정
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    MainWrap
+  },
+  data() {
+    return {};
+  },
+};
+
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  /* 스타일 설정 금지..! */
+  #app{
+    height:100%;
+    width:100%;
+  }
 </style>

@@ -1,9 +1,13 @@
-import { creatStore } from 'vuex';
+import { createStore } from 'vuex';
 import map from './modules/map';
 
-export default creatStore({
+
+
+const store = createStore({
   modules: {
     map
   }
-});
+})
+
+export default store;
 

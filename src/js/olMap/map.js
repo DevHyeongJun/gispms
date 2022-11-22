@@ -1,8 +1,10 @@
 import View from 'ol/View';
 import Map from 'ol/Map';
-import {TileMap} from '@/js/map/layer/tile/Tiles';
 import proj4 from 'proj4/dist/proj4';
 import {register} from 'ol/proj/proj4';
+
+import {TileMap} from '@/js/olMap/layer/tile/Tiles';
+
 import {
  get
 } from 'ol/proj';
@@ -14,10 +16,9 @@ proj4.defs([
 
 register(proj4);
 
-
 export default {
   createMap : (eleId) => {
-    return new Map({
+    const map =  new Map({
       target: eleId,
       renderer: "webgl",
       logo : false,
@@ -28,8 +29,11 @@ export default {
       view: new View({
         projection: get('EPSG:5186'),
         center: [200000, 600000],
-        zoom: 2,
+        zoom: 12,
       }),
     });
+
+    map.getView().fit([-466130.4139568072, 34255.27610304137, 979230.963035262, 703487.7053457234]);
+    return map;
   }
 }

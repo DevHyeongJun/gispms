@@ -68,6 +68,7 @@ export default {
     },
     data() {
         return {
+            selected : '',
             projStat: {},
             memberList : []
         }
@@ -75,6 +76,7 @@ export default {
 
     methods : {
         onRowClick(c) {
+            this.selected = c.data['이름'];
             this.$store.dispatch('search/setSearchTXT', c.data['이름']);
         }
     },

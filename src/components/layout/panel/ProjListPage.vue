@@ -56,10 +56,19 @@
          InputText
      },
      watch: {
-         searhchTXT: function (newVal, oldVal) {
-             console.log(newVal, oldVal);
+         searhchTXT: function (newVal) {
+            
+            this.filters['global'].value = newVal;
+
+            this.searchHandler(newVal);
          }
      },
+
+     computed: {
+        searhchTXT () {
+            return this.$store.getters['search/getSearchTXT'];
+        }
+    },
 
      mounted() {
  
@@ -69,7 +78,6 @@
      data() {
          
          return {
-            searhchTXT:"searchTxt",
             projData : [],
              layerList : [],
              projList: [],
@@ -107,14 +115,11 @@
                  this.$store.dispatch('map/addPoint', {clusterid:'gmx_cluster', id:'gmx_point', layerList : this.layerList});
              }, true);
          },
- 
-         setChangeSearch(event) {
+         
+         searchHandler(updatedText) {
+            this.$store.dispatch('search/setSearchTXT', updatedText);
 
-             const updatedText = event.target.value;
-             this.$store.dispatch('search/setSearchTXT', updatedText);
-
-             
-             const newList = this.layerList.filter((item) => {
+            const newList = this.layerList.filter((item) => {
                
                 const name = item['name'];
                 const projName = item['projName'];
@@ -131,6 +136,12 @@
                 }
              });
              this.$store.dispatch('map/addPoint', {clusterid:'gmx_cluster', id:'gmx_point', layerList : newList});
+         },
+
+         setChangeSearch(event) {
+
+            const updatedText = event.target.value;
+            this.searchHandler(updatedText);
          },
          
          getStatusCode : (statText) => {

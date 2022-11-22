@@ -20,7 +20,7 @@
         </div>
         <div class="proj_member_list">
             <DataTable  :rowHover="true" :value="memberList" class="p-datatable-customers" :rows="10" :loading="loading"
-                responsiveLayout="scroll" breakpoint="240px" @row-click="onRowClick">
+                responsiveLayout="scroll" breakpoint="240px" @row-click="onRowClick"  v-model:selection="selectedProduct1" selectionMode="single" >
                 <template #empty>
                     데이터가 존재하지 않습니다.
                 </template>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 
 import {NotionApi} from '@/js/request/notionApi.js';
 
@@ -56,6 +57,12 @@ export default {
     components: {
         DataTable,
         Column
+    },
+
+    setup() {
+        const selectedProduct1 = ref();
+
+        return { selectedProduct1};
     },
     
     mounted() {
@@ -76,10 +83,17 @@ export default {
 
     methods : {
         onRowClick(c) {
+           
+            this.$store.dispatch('search/setSearchTXT', c.data['이름']);
+        },
+        onRowSelect(c) {
             this.selected = c.data['이름'];
+            alert(this.selected);
             this.$store.dispatch('search/setSearchTXT', c.data['이름']);
         }
     },
+
+    
 };
 </script>
 
@@ -124,5 +138,9 @@ export default {
     .currnet_color_3 {
         background: #ffcdd2;
         color: #c63737;
+    }
+
+    .p-datatable .p-datatable-tbody > tr.p-highlight * {
+        font-weight: bold;
     }
 </style>
